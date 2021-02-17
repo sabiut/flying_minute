@@ -1,0 +1,194 @@
+
+<head>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</head>
+
+
+{% extends "index.html"%}
+
+{%block content%}
+
+    <div class="card-footer text-muted">
+   {% for message in messages%}
+            <div class="color">
+                <font color="#2C2F90"><strong>Success!</strong> {{message}}</font>
+            </div>
+        {% endfor%}
+  </div>
+
+
+  <div class="card-header">
+     <h2>Reserve Bank of Vanuatu Board of Directors Flying Minutes
+  </h2>
+  </div>
+
+
+
+  <div class="card-body">
+      <form method="post" action="" enctype="multipart/form-data" >
+    {% csrf_token %}
+
+          <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        Mode of meeting:
+                    </div>
+                <div class="col-6">
+                   {{form.mode_of_meeting}}
+                </div>
+
+
+                     <div class="col-6">
+                        Date:
+                    </div>
+                <div class="col-6">
+                   {{form.date}}
+                </div>
+
+                      <div class="col-6">
+                        Time:
+                    </div>
+                <div class="col-6">
+                   {{form.Time}}
+                </div>
+
+
+                     <div class="col-6">
+                        Minute Prepared By:
+                    </div>
+                <div class="col-6">
+                   {{form.minute_prepared_by}}
+                </div>
+
+                      <div class="col-6">
+                        Location:
+                    </div>
+                <div class="col-6">
+                   {{form.location}}
+                </div>
+
+                       <div class="col-6">
+                        Minute Authorized By:
+                    </div>
+                <div class="col-6">
+                   {{form.authorize_by}}
+                </div>
+
+                <h4>Attendance at the Meeting/Virtual</h4>
+                         <div class="col-6">
+                        Name:
+                    </div>
+                <div class="col-6">
+                   {{form.name}}
+                </div>
+
+                            <div class="col-6">
+                        Status:
+                    </div>
+                <div class="col-6">
+                   {{form.status}}
+                </div>
+
+                            <div class="col-6">
+                        Email:
+                    </div>
+                <div class="col-6">
+                   {{form.email}}
+                </div>
+
+                            <div class="col-6">
+                        Phone:
+                    </div>
+                <div class="col-6">
+                   {{form.phone}}
+                </div>
+          <h4>Agenda, Notes, Recommendations, Issues</h4>
+
+                      <div class="col-6">
+                        Item 1:
+                    </div>
+                <div class="col-6">
+                   {{form.item}}
+                </div>
+
+                      <div class="col-6">
+                        Owner:
+                    </div>
+                <div class="col-6">
+                   {{form.owner}}
+                </div>
+
+                     <div class="col-6">
+                        Recommendations:
+                    </div>
+                <div class="col-6">
+                   {{form.recommendations}}
+                </div>
+
+                     <div class="col-6">
+                         Notes:
+                    </div>
+                <div class="col-6">
+                   {{form.notes}}
+                </div>
+
+                     <div class="col-6">
+                        Issues:
+                    </div>
+                <div class="col-6">
+                   {{form.issues}}
+                </div>
+
+                    <h4>Resolutions(s), Decisions(s), Action items</h4>
+
+                    <div class="col-6">
+                        Resolution:
+                    </div>
+                <div class="col-6">
+                   {{form.resolutions}}
+                </div>
+
+                     <div class="col-6">
+                        Owner:
+                    </div>
+                <div class="col-6">
+                   {{form.resolution_Owner}}
+                </div>
+
+                      <div class="col-6">
+                        Due Date:
+                    </div>
+                <div class="col-6">
+                   {{form.due_date}}
+                </div>
+
+                        <div class="col-6">
+                        Action:
+                    </div>
+                <div class="col-6">
+                   {{form.Action}}
+                </div>
+
+                        <div class="col-6">
+                        Department or Person Responsible:
+                    </div>
+                <div class="col-6">
+                   {{form.department_or_person_responsible}}
+                </div>
+
+
+                </div>
+              <button type="submit" class="btn btn-info"><i class="fas fa-save"></i> Save Record</button>
+          </div>
+
+
+      </form>
+  </div>
+
+
+{%endblock%}
+
+

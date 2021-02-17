@@ -284,12 +284,15 @@ input[type=text]:placeholder {
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="Login">
       <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password">
       <input type="submit" class="fadeIn fourth" value="Log In">
+      <a href="{%url 'dashboard'%}">Login</a>
     </form>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+      <a class="underlineHover" href="{%url 'minute'%}">Forgot Password?</a>
     </div>
 
   </div>
+
 </div>
+

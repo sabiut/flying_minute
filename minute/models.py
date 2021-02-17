@@ -24,7 +24,7 @@ class fly_minute(models.Model):
     notes = models.TextField()
     issues = models.TextField()
     resolutions = models.TextField()
-    Owner = models.CharField(max_length=25)
+    resolution_Owner = models.CharField(max_length=25)
     due_date = models.DateField()
     Action = models.TextField()
     department_or_person_responsible = models.CharField(max_length=25)
