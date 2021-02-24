@@ -2,6 +2,9 @@ from django.db import models
 
 
 # Create your models here.
+from partial_date import PartialDateField
+
+
 class fly_minute(models.Model):
     mode = (
         ('Email', 'Email'),
@@ -44,3 +47,15 @@ class fly_minute(models.Model):
 
     def __str__(self):
         return self.mode_of_meeting
+
+
+class BoardMembers(models.Model):
+    name = models.CharField(max_length=100, default='')
+    status = models.CharField(max_length=100, default='')
+    email = models.EmailField(max_length=100, default='')
+    phone = models.CharField(max_length=100, default='')
+    start_date = models.DateField(max_length=100,null=True)
+
+
+    def __str__(self):
+        return self.name

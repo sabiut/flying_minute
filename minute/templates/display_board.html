@@ -1,0 +1,35 @@
+{% extends "index.html"%}
+
+{%block content%}
+ <div class="card-header">
+<h3>Reserve Bank Board Members</h3>
+ </div>
+<table class="table" id="tblCustomers">
+    <thead>
+      <tr class="table-success">
+          <th>Update</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Start Date</th>
+
+
+      </tr>
+    </thead>
+    {%for member in board_members%}
+
+    <tbody>
+      <tr class="success">
+          <td><i class="far fa-edit"></i></td>
+        <td>{{member.name}}</td>
+        <td>{{member.status}}</td>
+        <td>{{member.email}}</td>
+        <td>{{member.phone}}</td>
+        <td>{{member.start_date}}</td>
+    </tbody>
+    {%endfor%}
+
+  </table>
+
+{%endblock%}

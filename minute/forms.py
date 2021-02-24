@@ -29,3 +29,12 @@ class approvalForm(forms.ModelForm):
         widgets = {
             'Approval_date': DateInput()
         }
+
+
+class BoardMembersForm(forms.ModelForm):
+    class Meta:
+        model = BoardMembers
+        fields = '__all__'
+        widgets = {
+            'start_date': DateInput()
+        }

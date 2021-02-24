@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'minute.apps.MinuteConfig'
+    'minute.apps.MinuteConfig',
+    'calendarapp.apps.CalendarappConfig',
 ]
 
 MIDDLEWARE = [
@@ -127,6 +128,8 @@ STATIC_ROOT = 'static'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'flying_minute/static')
 ]
+
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
