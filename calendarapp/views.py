@@ -11,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from .models import *
-from .utils import Calendar
+from .utils import Calendar, MemberCalendar
 from .forms import EventForm, AddMemberForm
 
 
@@ -57,6 +57,21 @@ class CalendarView(LoginRequiredMixin, generic.ListView):
         context['next_month'] = next_month(d)
         return context
 
+class MemberView(LoginRequiredMixin, generic.ListView):
+    login_url = 'signup'
+    model = Event
+    template_name = 'member.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        d = get_date(self.request.GET.get('month', None))
+        cal = MemberCalendar(d.year, d.month)
+        html_cal = cal.formatmonth(withyear=True)
+        context['calendar'] = mark_safe(html_cal)
+        context['prev_month'] = prev_month(d)
+        context['next_month'] = next_month(d)
+
+        return context
 
 @login_required(login_url='signup')
 def create_event(request):
@@ -93,6 +108,16 @@ def event_details(request, event_id):
     }
     return render(request, 'event-details.html', context)
 
+
+@login_required(login_url='signup')
+def meeting_details(request, event_id):
+    event = Event.objects.get(id=event_id)
+    eventmember = EventMember.objects.filter(event=event)
+    context = {
+        'event': event,
+        'eventmember': eventmember
+    }
+    return render(request, 'meeting-details.html', context)
 
 def add_eventmember(request, event_id):
     forms = AddMemberForm()

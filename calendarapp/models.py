@@ -22,6 +22,11 @@ class Event(models.Model):
         url = reverse('calendarapp:event-detail', args=(self.id,))
         return f'<a href="{url}"> {self.title} </a>'
 
+    @property
+    def get_member_html_url(self):
+        url = reverse('calendarapp:meeting-detail', args=(self.id,))
+        return f'<a href="{url}"> {self.title} </a>'
+
 
 class EventMember(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

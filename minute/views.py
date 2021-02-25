@@ -1,9 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from django.urls import reverse_lazy
+from django.utils.safestring import mark_safe
+from django.views import generic
+
 from .forms import minutesForm, BoardMembersForm
 from .models import BoardMembers
 
@@ -11,6 +16,10 @@ from .models import BoardMembers
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from calendarapp.forms import SignupForm
+
+from calendarapp.models import Event
+from calendarapp.utils import Calendar
+from calendarapp.views import get_date, prev_month, next_month
 
 
 def index(request):
@@ -27,15 +36,20 @@ def login_page(request):
 
 # @login_required(login_url='login_page')
 def minute_form(request):
-    if request.method == 'POST':
-        form = minutesForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.info(request, 'Record was successfully added to the database!')
-        # return HttpResponseRedirect('/company_form')
-    else:
-        form = minutesForm()
-    return render(request, 'minute_form.html', {'form': form})
+    in_group = User.objects.filter(groups__name="organizer")
+    if request.user.is_authenticated:
+        if request.user in in_group:
+            if request.method == 'POST':
+                form = minutesForm(request.POST)
+                if form.is_valid():
+                    form.save()
+                    messages.info(request, 'Record was successfully added to the database!')
+            # return HttpResponseRedirect('/company_form')
+            else:
+                form = minutesForm()
+            return render(request, 'minute_form.html', {'form': form})
+        else:
+            return render(request, 'no_access.html')
 
 
 def add_board_members(request):
@@ -65,9 +79,22 @@ def signup(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                return redirect('dashboard')
+                if user.groups.filter(name="member").exists():
+
+                    return HttpResponseRedirect('/member')
+                else:
+                    return redirect('dashboard')
     context = {'form': forms}
     return render(request, 'signup.html', context)
+
+
+#@login_required(login_url='home')
+# def member_page(request):
+#     username = None
+#     if request.user.is_authenticated:
+#         return render(request, 'member.html')
+
+
 
 
 def user_logout(request):
