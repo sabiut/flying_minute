@@ -1,0 +1,45 @@
+
+<head>
+    <style>
+        .container{
+        padding-top: 25px;
+        }
+        .color{
+        color:blue;
+        }
+    </style>
+</head>
+{% extends "index.html"%}
+{%block content%}
+
+{%block content-search%}
+
+{%endblock%}
+
+<div class="content-wrapper">
+    <div class="card text-center">
+  <div class="card-header">
+    <i class="fas fa-tasks"></i> Browse to select and upload file.
+  </div>
+  <div class="card-body">
+
+     <form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+   Description: {{form.description}} {{ form.document}}
+    <button type="submit" class="btn btn-info"> <i class="fas fa-file-upload"></i> Upload File</button>
+  </form>
+<p><a href="{% url 'dashboard' %}"> <i class="fas fa-home"></i> Return to home</a></p>
+  </div>
+
+  <div class="card-footer text-muted">
+   {% for message in messages%}
+            <div class="color">
+                <p>{{message}}</p>
+            </div>
+        {% endfor%}
+  </div>
+</div>
+
+</div>
+
+{% endblock%}

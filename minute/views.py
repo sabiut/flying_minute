@@ -88,15 +88,18 @@ def signup(request):
     return render(request, 'signup.html', context)
 
 
-#@login_required(login_url='home')
+# @login_required(login_url='home')
 # def member_page(request):
 #     username = None
 #     if request.user.is_authenticated:
 #         return render(request, 'member.html')
 
 
-
-
 def user_logout(request):
     logout(request)
     return redirect('signup')
+
+
+@login_required(login_url='home')
+def upload_file(request):
+    return render(request, 'upload_page.html')

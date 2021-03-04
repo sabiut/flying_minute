@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('minute.urls')),
     path('', include('calendarapp.urls')),
+    path('', include('uploadfile.urls'))
 
 ]

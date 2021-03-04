@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'minute.apps.MinuteConfig',
     'calendarapp.apps.CalendarappConfig',
+    'uploadfile.apps.UploadfileConfig',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,4 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
