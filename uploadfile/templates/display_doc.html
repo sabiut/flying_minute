@@ -16,7 +16,7 @@
         <td><a href=" {{ doc.document.url }}" class="btn btn-primary btn-sm" target="_blank"><i class="fas fa-cloud-download-alt"></i> Download</a>
         <td>{{doc.uploaded_at}}</td>
         <td><a class="btn btn-danger" href="{% url 'drop_paper' doc.id %}"> <i class="fas fa-trash-alt"></i> Remove</a></td>
-        <td></td>
+        <td><a class="btn btn-warning" href="{% url 'update_paper' doc.id %}"><i class="fas fa-edit"> Edit</i></a></td>
     </tr>
      {%endfor%}
 </table>

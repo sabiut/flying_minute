@@ -7,6 +7,7 @@ urlpatterns = [
     path('displayfile/', views.displayfile, name='displayfile'),
     path('view_file/', views.view_file, name ='view_file'),
     path(r'<int:paper_id>/delete_paper/', views.drop_paper, name='drop_paper'),
+    path(r'<int:paper_id>/update_paper/', views.update_paper_form, name='update_paper'),
 ]
 
 if settings.DEBUG:

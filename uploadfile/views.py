@@ -42,3 +42,17 @@ def drop_paper(request, paper_id):
     delete_paper.delete()
     return render(request, 'delete_paper_success.html')
 
+
+@login_required(login_url='home')
+def update_paper_form(request, paper_id):
+    if request.method == 'POST':
+        get_paper_id = BoardPaper.objects.get(id=paper_id)
+        form = DocumentForm(request.POST, instance=get_paper_id)
+        if form.is_valid():
+            form.save()
+            # messages.info(request,'successfully updated the board record.')
+            return redirect('displayfile')
+    else:
+        get_paper_id = BoardPaper.objects.get(id=paper_id)
+        form = DocumentForm(instance=get_paper_id)
+    return render(request, 'upload_page.html', locals())
