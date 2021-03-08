@@ -32,7 +32,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{%url 'dashboard'%}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-handshake"></i>
                 </div>
@@ -44,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{%url 'dashboard'%}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -64,6 +64,7 @@
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Board Members</span>
                 </a>
+                {%block boardmembers%}
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage Member</h6>
@@ -72,6 +73,7 @@
 
                     </div>
                 </div>
+                {%endblock%}
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -81,6 +83,7 @@
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Organize Meeting</span>
                 </a>
+                {%block side%}
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -91,6 +94,7 @@
 <!--                        <a class="collapse-item" href="utilities-other.html">Other</a>-->
                     </div>
                 </div>
+                {%endblock%}
             </li>
 
             <!-- Divider -->
@@ -353,7 +357,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800"><a href ="{%url 'dashboard'%}"></a>Dashboard</h1>
                         <a href="{%url 'minute'%}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                             <i class="fas fa-chalkboard-teacher"></i> Generate Minutes</a>
                     </div>

@@ -69,6 +69,28 @@ def display_board_members(request):
     return render(request, 'display_board.html', locals())
 
 
+@login_required(login_url='home')
+def update_member_form(request, member_id):
+    if request.method == 'POST':
+        get_member_id = BoardMembers.objects.get(id=member_id)
+        form = BoardMembersForm(request.POST, instance=get_member_id)
+        if form.is_valid():
+            form.save()
+            # messages.info(request,'successfully updated the board record.')
+            return render(request, 'success_message.html')
+    else:
+        get_member_id = BoardMembers.objects.get(id=member_id)
+        form = BoardMembersForm(instance=get_member_id)
+    return render(request, 'add_member.html', locals())
+
+
+@login_required(login_url='home')
+def drop_member(request, member_id):
+    delete_member = BoardMembers.objects.get(id=member_id)
+    delete_member.delete()
+    return render(request, 'delete_member_success.html')
+
+
 def signup(request):
     forms = SignupForm()
     if request.method == 'POST':

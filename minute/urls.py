@@ -11,6 +11,8 @@ urlpatterns = [
     path('display_board_members/', views.display_board_members, name='display_board_members'),
     path('signup/', signup, name='signup'),
     path('logout/', user_logout, name='logout'),
-    path('upload_file/', views.upload_file, name='upload_file')
+    path('upload_file/', views.upload_file, name='upload_file'),
+    path(r'<int:member_id>/update_member/', views.update_member_form, name='update_member'),
+    path(r'<int:member_id>/delete_member/', views.drop_member, name='drop_member'),
 
 ]

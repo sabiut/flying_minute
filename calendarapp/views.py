@@ -1,4 +1,6 @@
 from datetime import datetime, date
+
+import self as self
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
@@ -13,6 +15,9 @@ from django.urls import reverse_lazy
 from .models import *
 from .utils import Calendar, MemberCalendar
 from .forms import EventForm, AddMemberForm
+
+from django.contrib.auth.models import User
+from django.http import request
 
 
 @login_required(login_url='signup')
