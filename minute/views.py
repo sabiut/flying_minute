@@ -148,9 +148,15 @@ def DisplayGenetratedMinutes(request):
     board_minutes = fly_minute.objects.all()
     return render(request, 'display_generated_minutes.html', locals())
 
+#
+# @login_required(login_url='login_page')
+# def MinutesReport(request, flyminute_id):
+#     report = fly_minute.objects.filter(id=flyminute_id).prefetch_related('memberspresent_set')
+#     context = {'report': report}
+#     return render(request, 'minute_report.html', context)
+
 
 @login_required(login_url='login_page')
 def MinutesReport(request, flyminute_id):
-    report = fly_minute.objects.filter(id=flyminute_id).prefetch_related('membersrelated_set')
-    context = {'report': report}
-    return render(request, 'minute_report.html', context)
+    report = fly_minute.objects.filter(id=flyminute_id).prefetch_related('memberspresent_set')
+    return render(request, 'minute_report.html', locals())

@@ -116,19 +116,21 @@ $(function () {
           <th>Phone</th>
       </tr>
     </thead>
-    {%for rpt in report%}
+        {%for rpt in report%}
+    {%for rpts in rpt.memberspresent_set.all%}
 
     <tbody>
       <tr class="table-active">
 
-        <td>{{rpt.flyminute.name}}</td>
-        <td>{{rpt.flyminute.status}}</td>
-          <td>{{rpt.flyminute.email}}</td>
-          <td>{{rpt.phone}}</td>
+        <td>{{rpts.name}}</td>
+        <td>{{rpts.status}}</td>
+          <td>{{rpts.email}}</td>
+          <td>{{rpts.phone}}</td>
 
 
     </tbody>
     {%endfor%}
+        {%endfor%}
 
   </table>
 

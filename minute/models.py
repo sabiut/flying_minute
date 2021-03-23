@@ -46,7 +46,7 @@ class fly_minute(models.Model):
 
 class MembersPresent(models.Model):
     flyminute = models.ForeignKey(fly_minute,
-                                  related_name='membersrelated_set',
+                                  related_name='memberspresent_set',
                                   on_delete=models.CASCADE)
     name = models.CharField(max_length=25)
     status = models.CharField(max_length=25)
