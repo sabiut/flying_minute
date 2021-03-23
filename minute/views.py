@@ -9,8 +9,8 @@ from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django.views import generic
 
-from .forms import minutesForm, BoardMembersForm
-from .models import BoardMembers
+from .forms import minutesForm, BoardMembersForm, AddMemberPresentForm
+from .models import BoardMembers, fly_minute
 
 # signup
 from django.contrib.auth import authenticate, login, logout
@@ -34,31 +34,42 @@ def login_page(request):
     return render(request, 'login.html')
 
 
-# @login_required(login_url='login_page')
+@login_required(login_url='login_page')
 def minute_form(request):
+    if request.method == 'POST':
+        form = minutesForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/add_member_present_form')
+    else:
+        form = minutesForm()
+    return render(request, 'minute_form.html', {'form': form})
+
+
+@login_required(login_url='login_page')
+def add_member_present_form(request):
     in_group = User.objects.filter(groups__name="organizer")
     if request.user.is_authenticated:
         if request.user in in_group:
             if request.method == 'POST':
-                form = minutesForm(request.POST)
+                form = AddMemberPresentForm(request.POST)
                 if form.is_valid():
                     form.save()
-                    messages.info(request, 'Record was successfully added to the database!')
-            # return HttpResponseRedirect('/company_form')
+                    return render(request, 'member_present_success.html')
             else:
-                form = minutesForm()
-            return render(request, 'minute_form.html', {'form': form})
+                form = AddMemberPresentForm()
+            return render(request, 'add_member_present_form.html', {'form': form})
         else:
             return render(request, 'no_access.html')
 
 
 def add_board_members(request):
     if request.method == 'POST':
-        form = BoardMembersForm(request.POST)
+        form = BoardMembersForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.info(request, 'Record was successfully added to the database!')
-        # return HttpResponseRedirect('/company_form')
+            return render(request, 'add_member_success.html')
+
     else:
         form = BoardMembersForm()
     return render(request, 'board_members.html', {'form': form})
@@ -69,7 +80,7 @@ def display_board_members(request):
     return render(request, 'display_board.html', locals())
 
 
-@login_required(login_url='home')
+@login_required(login_url='login_page')
 def update_member_form(request, member_id):
     if request.method == 'POST':
         get_member_id = BoardMembers.objects.get(id=member_id)
@@ -84,7 +95,7 @@ def update_member_form(request, member_id):
     return render(request, 'add_member.html', locals())
 
 
-@login_required(login_url='home')
+@login_required(login_url='login_page')
 def drop_member(request, member_id):
     delete_member = BoardMembers.objects.get(id=member_id)
     delete_member.delete()
@@ -122,6 +133,24 @@ def user_logout(request):
     return redirect('signup')
 
 
-@login_required(login_url='home')
+@login_required(login_url='login_page')
 def upload_file(request):
     return render(request, 'upload_page.html')
+
+
+@login_required(login_url='login_page')
+def minutes(request):
+    return render(request, 'minutes.html')
+
+
+@login_required(login_url='login_page')
+def DisplayGenetratedMinutes(request):
+    board_minutes = fly_minute.objects.all()
+    return render(request, 'display_generated_minutes.html', locals())
+
+
+@login_required(login_url='login_page')
+def MinutesReport(request, flyminute_id):
+    report = fly_minute.objects.filter(id=flyminute_id).prefetch_related('membersrelated_set')
+    context = {'report': report}
+    return render(request, 'minute_report.html', context)

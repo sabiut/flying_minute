@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+  <!-- choose one -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <title>Reserve Bank of Vanuatu Board Minutes</title>
+
+    <!-- jquery printer setup -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- test setup printer-->
+
+
+
+<!--
+    <script>
+$(function () {
+    $('button[type="submit"]').click(function () {
+        var pageTitle = 'VFSC Annual Leave',
+            stylesheet = '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css',
+            win = window.open('', 'Print', 'width=500,height=300');
+        win.document.write('<html><head><title>' + pageTitle + '</title>' +
+            '<link rel="stylesheet" href="' + stylesheet + '">' +
+            '</head><body>' + $('.container')[0].outerHTML + '</body></html>');
+
+        win.document.close();
+        win.print();
+        win.close();
+        return false;
+    });
+});
+
+
+    </script>
+
+    -->
+    <!-- end test setup printer-->
+
+
+
+
+
+</head>
+<body>
+<!-- setup view report start-->
+<br>
+<div class="container">
+    <div class="row">
+        <div class=" col-md-11">
+
+            {% load  static %}
+            <img src="{% static 'img/vfsc.jpeg' %}"  id="img"/>
+            <h2>The Reserve Bank Of Vanuatu Board Minutes</h2>
+        </div>
+
+        <div class="col-md-1"><a href="javascript:window.print()"> <span class="pull-right"><i class="fas fa-print"> Print</i> </span></a></div>
+
+        <!--<div class="col-md-1"><span class="pull-right"><button class="btn btn-sm pull-right btn-default" type="submit">Print without logo</button></span></div>-->
+    </div>
+
+</div>
+<br>
+<div class="container">
+    <table class="table " id="printTable">
+    <thead class="table-success">
+
+      <tr>
+
+        <th>Meeting Mode</th>
+        <th>Date</th>
+          <th>Time</th>
+          <th>Minute Prepared By</th>
+          <th>Venue</th>
+          <th>Authorized By</th>
+
+
+      </tr>
+    </thead>
+    {%for rpt in report%}
+
+    <tbody>
+      <tr class="table-active">
+
+        <td>{{rpt.mode_of_meeting}}</td>
+        <td>{{rpt.date}}</td>
+          <td>{{rpt.Time}}</td>
+          <td>{{rpt.minute_prepared_by}}</td>
+          <td>{{rpt.authorize_by}}</td>
+          <td>{{rpt.authorize_by}}</td>
+
+    </tbody>
+    {%endfor%}
+
+  </table>
+
+</div>
+<hr>
+<!-- view report end-->
+<!--Meeting Attendance  -->
+
+<div class="container">
+    <h3>1. Attendance at Meeting/Virtual</h3>
+    <table class="table " >
+    <thead class="table-success">
+
+      <tr>
+
+        <th>Name</th>
+        <th>Status</th>
+          <th>Email</th>
+          <th>Phone</th>
+      </tr>
+    </thead>
+    {%for rpt in report%}
+
+    <tbody>
+      <tr class="table-active">
+
+        <td>{{rpt.flyminute.name}}</td>
+        <td>{{rpt.flyminute.status}}</td>
+          <td>{{rpt.flyminute.email}}</td>
+          <td>{{rpt.phone}}</td>
+
+
+    </tbody>
+    {%endfor%}
+
+  </table>
+
+</div>
+
+<!--Agenda Notes, Recommendations, Issues -->
+<div class="container">
+    <h3> 2. Agenda, Notes, Recommendations, Issues</h3>
+    <table class="table " >
+    <thead class="table-success">
+
+      <tr>
+
+        <th>Item</th>
+        <th>Owner</th>
+          <th>Recommendations</th>
+          <th>Notes</th>
+          <th>Issues</th>
+      </tr>
+    </thead>
+    {%for rpt in report%}
+
+    <tbody>
+      <tr class="table-active">
+
+        <td>{{rpt.item}}</td>
+        <td>{{rpt.owner}}</td>
+          <td>{{rpt.recommendations}}</td>
+          <td>{{rpt.notes}}</td>
+          <td>{{rpt.issues}}</td>
+
+
+    </tbody>
+    {%endfor%}
+
+  </table>
+
+</div>
+
+<!--Resolution, Decision, Action Items -->
+
+<div class="container">
+    <h3> 3. Resolition(s), Decision(s), Action Items</h3>
+    <table class="table " >
+    <thead class="table-success">
+
+      <tr>
+
+        <th>Resolution</th>
+        <th>Owner</th>
+          <th>Due Date</th>
+          <th>Action</th>
+          <th>Dept/Persons Responsible</th>
+      </tr>
+    </thead>
+    {%for rpt in report%}
+
+    <tbody>
+      <tr class="table-active">
+
+        <td>{{rpt.resolutions}}</td>
+        <td>{{rpt.resolution_Owner}}</td>
+          <td>{{rpt.due_date}}</td>
+          <td>{{rpt.Action}}</td>
+          <td>{{rpt.department_or_person_responsible}}</td>
+
+
+    </tbody>
+    {%endfor%}
+
+  </table>
+
+</div>
+<!-- Approvals -->
+
+
+<div class="container">
+    <h3> 4. Approval(s)</h3>
+    <table class="table " >
+    <thead class="table-success">
+
+      <tr>
+
+        <th>Chairman</th>
+        <th>Director/Ex Officio</th>
+          <th>Director</th>
+
+      </tr>
+    </thead>
+    {%for rpt in report%}
+
+    <tbody>
+      <tr class="table-active">
+
+        <td>{{rpt.authorize_by_chairman}}</td>
+        <td>{{rpt.authorize_by_director_ex_officio}}</td>
+          <td>{{rpt.authorize_by_directors }}</td>
+
+
+    </tbody>
+    {%endfor%}
+
+  </table>
+
+</div>
+
+<!-- Approvals -->
+
+<hr>
+<div class="container">
+
+    <table class="table " >
+    <thead class="table-success">
+
+      <tr>
+
+        <th> Minutes Approved By Chairman</th>
+        <th>Signature </th>
+          <th>Date</th>
+
+      </tr>
+    </thead>
+    {%for rpt in report%}
+
+    <tbody>
+      <tr>
+
+        <td>{{rpt.Minute_approved_by_the_Chairmen}}</td>
+        <td></td>
+          <td>{{rpt.Approval_date}}</td>
+
+
+    </tbody>
+    {%endfor%}
+
+  </table>
+
+</div>
+</body>
+</html>

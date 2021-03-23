@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # Create your models here.
 from partial_date import PartialDateField
 
@@ -17,10 +16,6 @@ class fly_minute(models.Model):
     minute_prepared_by = models.CharField(max_length=25)
     location = models.CharField(max_length=25)
     authorize_by = models.CharField(max_length=25)
-    name = models.CharField(max_length=25)
-    status = models.CharField(max_length=25)
-    email = models.EmailField(max_length=25)
-    phone = models.IntegerField()
     item = models.TextField()
     owner = models.CharField(max_length=25)
     recommendations = models.TextField()
@@ -43,19 +38,58 @@ class fly_minute(models.Model):
     authorize_by_director_ex_officio = models.CharField(max_length=100, choices=people, blank=False, )
     authorize_by_directors = models.TextField(max_length=100, choices=people, blank=False, )
     Minute_approved_by_the_Chairmen = models.CharField(max_length=25)
-    Approval_date = models.DateField()
+    Approval_date = models.DateField(null= True)
 
     def __str__(self):
         return self.mode_of_meeting
 
 
+class MembersPresent(models.Model):
+    flyminute = models.ForeignKey(fly_minute,
+                                  related_name='membersrelated_set',
+                                  on_delete=models.CASCADE)
+    name = models.CharField(max_length=25)
+    status = models.CharField(max_length=25)
+    email = models.EmailField(max_length=25)
+    phone = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+
 class BoardMembers(models.Model):
     name = models.CharField(max_length=100, default='')
-    status = models.CharField(max_length=100, default='')
-    email = models.EmailField(max_length=100, default='')
-    phone = models.CharField(max_length=100, default='')
-    start_date = models.DateField(max_length=100,null=True)
+    island = models.CharField(max_length=100, default='', null=True)
+    region = (
+        ('Torba', 'Torba'),
+        ('Sanma', 'Sanma'),
+        ('Penama', 'Penama'),
+        ('Malampa', 'Malampa'),
+        ('Shefa', 'Shefa'),
+        ('Tafea', 'Tafea'),
 
+    )
+
+    province = models.CharField(max_length=100, choices=region, blank=False, null=True)
+
+    residential_address = models.CharField(max_length=100, default='', null=True)
+    status = models.CharField(max_length=100, default='', null=True)
+    email = models.EmailField(max_length=100, default='', null=True)
+    phone = models.CharField(max_length=100, default='', null=True)
+    emergency_contact_person = models.CharField(max_length=100, null=True)
+    relationship = models.CharField(max_length=100, default='', null=True)
+    emergency_contact = models.IntegerField(default='0', null=True)
+    blood = (
+        ('A', 'A'),
+        ('B', 'B'),
+        ('AB', 'AB'),
+        ('O', 'O'),
+
+    )
+
+    blood_type = models.CharField(max_length=100, choices=blood, blank=False, null=True)
+    CV = models.FileField(upload_to='board_cv/pdf/')
+    start_date = models.DateField(max_length=100, null=True)
 
     def __str__(self):
         return self.name

@@ -1,0 +1,85 @@
+
+<head>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</head>
+
+
+{% extends "index.html"%}
+
+{%block content%}
+
+    <div class="card-footer text-muted">
+   {% for message in messages%}
+            <div class="color">
+                <font color="#2C2F90"><strong>Success!</strong> {{message}}</font>
+            </div>
+        {% endfor%}
+  </div>
+
+
+  <div class="card-header">
+     <h2>Reserve Bank of Vanuatu Board of Directors Flying Minutes
+  </h2>
+  </div>
+
+
+
+  <div class="card-body">
+      <form method="post" action="" enctype="multipart/form-data" >
+    {% csrf_token %}
+
+          <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        Board Members that were present
+                    </div>
+
+                <div class="col-6">
+                   {{form.flyminute}}
+                </div>
+
+
+                     <div class="col-6">
+                        Name:
+                    </div>
+                <div class="col-6">
+                   {{form.name}}
+                </div>
+
+                      <div class="col-6">
+                        Status:
+                    </div>
+                <div class="col-6">
+                   {{form.status}}
+                </div>
+
+
+                     <div class="col-6">
+                        Email:
+                    </div>
+                <div class="col-6">
+                   {{form.email}}
+                </div>
+
+                     <div class="col-6">
+                        Phone:
+                    </div>
+                <div class="col-6">
+                   {{form.phone}}
+                </div>
+
+                </div>
+              <button type="submit" class="btn btn-info"><i class="fas fa-save"></i> Save Record</button>
+          </div>
+
+
+      </form>
+  </div>
+
+
+{%endblock%}
+
+

@@ -1,0 +1,31 @@
+{% extends "index.html"%}
+
+{%block content%}
+ <div class="card-header">
+<h3>Reserve Bank Board Flying Minutes</h3>
+ </div>
+<table class="table" id="tblCustomers">
+    <thead>
+      <tr class="table-success">
+          <th>Meeting Mode</th>
+          <th>Meeting Date</th>
+
+
+
+      </tr>
+    </thead>
+    {%for member in board_minutes%}
+
+    <tbody>
+      <tr class="success">
+          <td>{{member.mode_of_meeting}}</td>
+          <td> <a href="{% url 'MinutesReport' member.id %}"><i class="fas fa-calendar-alt"> </i> {{member.date}}</a></td>
+      </tr>
+
+
+
+    </tbody>
+    {%endfor%}
+
+  </table>
+{%endblock%}

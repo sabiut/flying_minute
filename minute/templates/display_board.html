@@ -10,9 +10,17 @@
           <th>Delete</th>
           <th>Update</th>
         <th>Name</th>
+          <th>Island</th>
+          <th>Province</th>
+          <th>Residential address</th>
+          <th>Emergency contact person</th>
+          <th>Relationship</th>
+          <th>Emergency Contact</th>
+          <th>Blood Type</th>
         <th>Status</th>
         <th>Email</th>
         <th>Phone</th>
+          <th>Resume</th>
         <th>Start Date</th>
 
 
@@ -26,9 +34,17 @@
           <td><a href="{% url 'drop_member' member.id %}"><i class="fas fa-trash-alt"></i></a></td>
            <td><a href="{% url 'update_member' member.id %}"><i class="fas fa-edit"></i></a></td>
         <td>{{member.name}}</td>
+          <td>{{member.island}}</td>
+          <td>{{member.province}}</td>
+          <td>{{member.residential_address}}</td>
+          <td>{{member.emergency_contact_person}}</td>
+          <td>{{member.relationship}}</td>
+          <td>{{member.emergency_contact}}</td>
+          <td>{{member.blood_type}}</td>
         <td>{{member.status}}</td>
         <td>{{member.email}}</td>
         <td>{{member.phone}}</td>
+          <td><a href=" {{ member.CV.url }}" class="btn btn-primary btn-sm" target="_blank"><i class="fas fa-cloud-download-alt"></i> Download CV</a> </td>
         <td>{{member.start_date}}</td>
     </tbody>
     {%endfor%}

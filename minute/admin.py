@@ -6,3 +6,4 @@ from .models import *
 
 admin.site.register(BoardMembers)
 admin.site.register(fly_minute)
+admin.site.register(MembersPresent)

@@ -23,3 +23,8 @@ urlpatterns = [
     path('', include('uploadfile.urls'))
 
 ]
+
+# customize the administrator text
+admin.site.site_header = "Reserve Bank of Vanuatu"
+admin.site.index_title = "Welcome to RBV Board of Directors Administrator"
+
