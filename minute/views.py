@@ -189,3 +189,20 @@ def commentForm(request):
     else:
         form = commentsForm()
     return render(request, 'newComment.html', {'form': form})
+
+
+@login_required(login_url='login_page')
+def update_fly_minute_form(request, minutes_id):
+    if request.method == 'POST':
+        get_minute_id = fly_minute.objects.get(id=minutes_id)
+        form = minutesForm(request.POST, instance=get_minute_id)
+        if form.is_valid():
+            form.save()
+            # messages.info(request,'successfully updated the board record.')
+            return render(request, 'fly_minute_success_message.html')
+    else:
+        get_member_id = fly_minute.objects.get(id=minutes_id)
+        form = minutesForm(instance=get_member_id)
+    return render(request, 'add_member.html', locals())
+
+

@@ -277,7 +277,9 @@ $(function () {
 <div class="container">
     <div class="row">
     <div class="col-sm-3"><h5><a href="{%url 'commentForm'%}"> <i class="fas fa-comment-alt"> Add Comment</i></a></h5></div>
-    <div class="col-sm-3"> <h5><i class="far fa-edit"></i> Edit</h5></div>
+         {%for rpt in report%}
+        <div class="col-sm-3"> <h5><a href="{% url 'update_fly_minute' rpt.id %}"><i class="far fa-edit"></i> Edit</a></h5></div>
+         {%endfor%}
         {%for a in reportest%}
         <div class="col-sm-3"><h5><a href="{% url 'display_report' a.id %}"><i class="far fa-file-alt"> Report</i></a></h5></div>
         {%endfor%}
@@ -293,8 +295,8 @@ $(function () {
        <tr>
            <td>
 
-         {{userinfo.user.first_name}} {{userinfo.user.last_name}} |
-          {{userinfo.date_created}}
+               <font color="blue" >{{userinfo.user.first_name}} {{userinfo.user.last_name}}</font> |
+               <font color="green"> {{userinfo.date_created}}</font>
            </td>
            <br>
        </tr>

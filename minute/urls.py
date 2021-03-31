@@ -13,12 +13,13 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('upload_file/', views.upload_file, name='upload_file'),
     path(r'<int:member_id>/update_member/', views.update_member_form, name='update_member'),
+    path(r'<int:minutes_id>/update_flyminute/', views.update_fly_minute_form, name='update_fly_minute'),
     path(r'<int:member_id>/delete_member/', views.drop_member, name='drop_member'),
-    path(r'minutes/', views.minutes, name ='minutes'),
+    path(r'minutes/', views.minutes, name='minutes'),
     path('add_member_present_form/', views.add_member_present_form, name='add_member_present_form'),
-    path('DisplayGenetratedMinutes/',views.DisplayGenetratedMinutes, name ='DisplayGenetratedMinutes'),
+    path('DisplayGenetratedMinutes/', views.DisplayGenetratedMinutes, name='DisplayGenetratedMinutes'),
     path(r'<int:flyminute_id>/bord_minute', views.MinutesReport, name='MinutesReport'),
     path(r'<int:report_id>/report', views.display_report, name='display_report'),
-    path('commentForm/',views.commentForm, name='commentForm'),
+    path('commentForm/', views.commentForm, name='commentForm'),
 
 ]
