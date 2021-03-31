@@ -273,43 +273,15 @@ $(function () {
 
 </div>
 
-<hr>
-<div class="container">
-    <div class="row">
-    <div class="col-sm-3"><h5><a href="{%url 'commentForm'%}"> <i class="fas fa-comment-alt"> Add Comment</i></a></h5></div>
-    <div class="col-sm-3"> <h5><i class="far fa-edit"></i> Edit</h5></div>
-        {%for a in reportest%}
-        <div class="col-sm-3"><h5><a href="{% url 'display_report' a.id %}"><i class="far fa-file-alt"> Report</i></a></h5></div>
-        {%endfor%}
-  </div>
-</div>
+<!--<hr>-->
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--    <div class="col-sm-6"><h5><a href="{%url 'commentForm'%}"> <i class="fas fa-comment-alt"> Add Comment</i></a></h5></div>-->
+<!--    <div class="col-sm-6"> <h5><i class="far fa-edit"></i> Edit</h5></div>-->
+<!--  </div>-->
+<!--</div>-->
 
-<hr>
-   <div class="container">
-        {%for rpt in comment%}
-        {%for userinfo in rpt.comments.all%}
-   <table>
 
-       <tr>
-           <td>
-
-         {{userinfo.user.first_name}} {{userinfo.user.last_name}} |
-          {{userinfo.date_created}}
-           </td>
-           <br>
-       </tr>
-
-      <tr>
-          <td>
-         <i class="far fa-comment-dots"></i> {{userinfo.comment}}
-
-          </td>
-      </tr>
-
-   </table>
-   {%endfor%}
-        {%endfor%}
-</div>
 </body>
 
 </html>

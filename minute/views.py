@@ -9,8 +9,8 @@ from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django.views import generic
 
-from .forms import minutesForm, BoardMembersForm, AddMemberPresentForm
-from .models import BoardMembers, fly_minute
+from .forms import minutesForm, BoardMembersForm, AddMemberPresentForm, commentsForm
+from .models import BoardMembers, fly_minute, Comments
 
 # signup
 from django.contrib.auth import authenticate, login, logout
@@ -148,6 +148,7 @@ def DisplayGenetratedMinutes(request):
     board_minutes = fly_minute.objects.all()
     return render(request, 'display_generated_minutes.html', locals())
 
+
 #
 # @login_required(login_url='login_page')
 # def MinutesReport(request, flyminute_id):
@@ -159,4 +160,32 @@ def DisplayGenetratedMinutes(request):
 @login_required(login_url='login_page')
 def MinutesReport(request, flyminute_id):
     report = fly_minute.objects.filter(id=flyminute_id).prefetch_related('memberspresent_set')
+    comment = fly_minute.objects.filter(id=flyminute_id).prefetch_related('comments')
+    reportest = fly_minute.objects.filter(id=flyminute_id).prefetch_related('memberspresent_set')
     return render(request, 'minute_report.html', locals())
+
+
+@login_required(login_url='login_page')
+def display_report(request, report_id):
+    report = fly_minute.objects.filter(id=report_id).prefetch_related('memberspresent_set')
+    context = {'report': report}
+    return render(request, 'report.html', context)
+
+
+@login_required(login_url='login_page')
+def display_comment(self, request):
+    comment = Comments.objects.filter(comment=self.report).order_by("date_created")
+
+
+@login_required(login_url='login_page')
+def commentForm(request):
+    if request.method == 'POST':
+        form = commentsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/DisplayGenetratedMinutes')
+            # return render(request, 'comment_added_successfully.html')
+
+    else:
+        form = commentsForm()
+    return render(request, 'newComment.html', {'form': form})

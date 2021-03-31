@@ -9,6 +9,7 @@
       <tr class="table-success">
           <th>Meeting Mode</th>
           <th>Meeting Date</th>
+          <th>Report</th>
 
 
 
@@ -20,6 +21,7 @@
       <tr class="success">
           <td>{{member.mode_of_meeting}}</td>
           <td> <a href="{% url 'MinutesReport' member.id %}"><i class="fas fa-calendar-alt"> </i> {{member.date}}</a></td>
+          <td><h5><a href="{% url 'display_report' member.id %}"><i class="far fa-file-alt"></i></a></h5></td>
       </tr>
 
 

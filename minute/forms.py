@@ -32,6 +32,12 @@ class approvalForm(forms.ModelForm):
         }
 
 
+class commentsForm(forms.ModelForm):
+    class Meta:
+        model = Comments
+        fields = 'flyminute', 'comment','user',
+
+
 class BoardMembersForm(forms.ModelForm):
     class Meta:
         model = BoardMembers

@@ -1,6 +1,8 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
+from django.utils.datetime_safe import strftime
 from partial_date import PartialDateField
 
 
@@ -38,10 +40,23 @@ class fly_minute(models.Model):
     authorize_by_director_ex_officio = models.CharField(max_length=100, choices=people, blank=False, )
     authorize_by_directors = models.TextField(max_length=100, choices=people, blank=False, )
     Minute_approved_by_the_Chairmen = models.CharField(max_length=25)
-    Approval_date = models.DateField(null= True)
+    Approval_date = models.DateField(null=True)
 
     def __str__(self):
         return self.mode_of_meeting
+
+
+class Comments(models.Model):
+    comment = models.TextField(max_length=500, default="")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    flyminute = models.ForeignKey(fly_minute,
+                                  related_name='comments',
+                                  on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', null=True, on_delete=models.CASCADE, related_name='replies')
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return format(self.date_created)
 
 
 class MembersPresent(models.Model):

@@ -18,5 +18,7 @@ urlpatterns = [
     path('add_member_present_form/', views.add_member_present_form, name='add_member_present_form'),
     path('DisplayGenetratedMinutes/',views.DisplayGenetratedMinutes, name ='DisplayGenetratedMinutes'),
     path(r'<int:flyminute_id>/bord_minute', views.MinutesReport, name='MinutesReport'),
+    path(r'<int:report_id>/report', views.display_report, name='display_report'),
+    path('commentForm/',views.commentForm, name='commentForm'),
 
 ]
