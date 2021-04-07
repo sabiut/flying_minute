@@ -7,19 +7,20 @@ from partial_date import PartialDateField
 
 
 class fly_minute(models.Model):
+    Agenda = models.CharField(max_length=100)
+    date = models.DateField()
     mode = (
         ('Email', 'Email'),
         ('Zoom', 'Zoom'),
         ('Alternative', 'Alternative'),
     )
     mode_of_meeting = models.CharField(max_length=100, choices=mode, blank=False, )
-    date = models.DateField()
     Time = models.TimeField()
     minute_prepared_by = models.CharField(max_length=25)
     location = models.CharField(max_length=25)
     authorize_by = models.CharField(max_length=25)
     item = models.TextField()
-    owner = models.CharField(max_length=25)
+    owner = models.CharField(max_length=25, default="Reserve Bank of Vanuatu")
     recommendations = models.TextField()
     notes = models.TextField()
     issues = models.TextField()
@@ -43,7 +44,7 @@ class fly_minute(models.Model):
     Approval_date = models.DateField(null=True)
 
     def __str__(self):
-        return self.mode_of_meeting
+        return self.Agenda
 
 
 class Comments(models.Model):
@@ -108,3 +109,6 @@ class BoardMembers(models.Model):
 
     def __str__(self):
         return self.name
+
+
+

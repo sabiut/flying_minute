@@ -37,3 +37,17 @@ class EventMember(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+class IndicatePresence(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    indication = (
+        ('YES', 'YES'),
+        ('NO', 'NO'),
+    )
+    available_for_meeting = models.CharField(max_length=100, choices=indication, default="", null=True, blank=True)
+    Todays_date = models.DateField()
+
+    def __str__(self):
+        return self.available_for_meeting

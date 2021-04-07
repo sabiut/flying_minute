@@ -14,7 +14,7 @@ from django.urls import reverse_lazy
 
 from .models import *
 from .utils import Calendar, MemberCalendar
-from .forms import EventForm, AddMemberForm
+from .forms import EventForm, AddMemberForm, IndicateAvailabilityForm
 
 from django.contrib.auth.models import User
 from django.http import request
@@ -62,6 +62,7 @@ class CalendarView(LoginRequiredMixin, generic.ListView):
         context['next_month'] = next_month(d)
         return context
 
+
 class MemberView(LoginRequiredMixin, generic.ListView):
     login_url = 'signup'
     model = Event
@@ -77,6 +78,7 @@ class MemberView(LoginRequiredMixin, generic.ListView):
         context['next_month'] = next_month(d)
 
         return context
+
 
 @login_required(login_url='signup')
 def create_event(request):
@@ -107,9 +109,11 @@ class EventEdit(generic.UpdateView):
 def event_details(request, event_id):
     event = Event.objects.get(id=event_id)
     eventmember = EventMember.objects.filter(event=event)
+    avail = IndicatePresence.objects.filter(event=event)
     context = {
         'event': event,
-        'eventmember': eventmember
+        'eventmember': eventmember,
+        'avail': avail
     }
     return render(request, 'event-details.html', context)
 
@@ -118,11 +122,14 @@ def event_details(request, event_id):
 def meeting_details(request, event_id):
     event = Event.objects.get(id=event_id)
     eventmember = EventMember.objects.filter(event=event)
+    avail = IndicatePresence.objects.filter(event=event)
     context = {
         'event': event,
-        'eventmember': eventmember
+        'eventmember': eventmember,
+        'avail': avail
     }
     return render(request, 'meeting-details.html', context)
+
 
 def add_eventmember(request, event_id):
     forms = AddMemberForm()
@@ -150,3 +157,19 @@ class EventMemberDeleteView(generic.DeleteView):
     model = EventMember
     template_name = 'event_delete.html'
     success_url = reverse_lazy('calendarapp:calendar')
+
+
+@login_required(login_url='sign_up')
+def IndicateAvailability(request, availability_id):
+    if request.method == 'POST':
+
+        #event =Event.objects.get(id=availability_id)
+        form = IndicateAvailabilityForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # messages.info(request,'successfully updated the board record.')
+            return HttpResponseRedirect('/member')
+    else:
+        #event = Event.objects.get(id=availability_id)
+        form = IndicateAvailabilityForm()
+    return render(request, 'availabilityForm.html', locals())

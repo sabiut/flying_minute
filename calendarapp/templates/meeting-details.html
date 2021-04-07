@@ -46,5 +46,42 @@ Event Details
                 {% endfor %}
               </tbody>
         </table>
+        <!-- Second table-->
+        <br><br>
+
+        <h4> <a class="btn btn-danger" href="{% url 'calendarapp:Indicate_Availability' event.id %}"> <i class="fas fa-tools"></i> Indicate Availability</a></h4>
+
+
+         <table class="table table-bordered">
+            <thead>
+
+                <tr>
+                  <th>Meeting Agenda</th>
+                  <th style="width: 10px">Member</th>
+
+                    <th>Availability</th>
+                  <th>Date Submited</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr role="row">
+                 {% for member in avail %}
+                    <td>{{member.event.title}}</td>
+                    <td>{{member.user.first_name}}</td>
+
+                    <td>{{member.available_for_meeting}}</td>
+                    <td>{{member.Todays_date}}</td>
+
+
+
+              {%endfor%}
+                </tr>
+
+
+              </tbody>
+        </table>
+
     </div>
 {% endblock %}

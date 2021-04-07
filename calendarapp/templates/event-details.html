@@ -34,17 +34,74 @@ Event Details
               </thead>
               <tbody>
                 {% for member in eventmember %}
+
                 <tr role="row">
                     <td>{{ forloop.counter }}</td>
                     <td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
                     <td>{{ member.user.username }}</td>
                     <td>{{ member.user.email }}</td>
+
+
                     <td>
                         <a class="btn btn-danger" href="{% url 'calendarapp:remove_event' member.id %}"> <i class="fas fa-trash-alt"></i> Remove</a>
                     </td>
+
+
+                    {%endfor%}
+
+
+
+
                 </tr>
-                {% endfor %}
+
+
               </tbody>
         </table>
+
+
+
+     <br><br>
+
+        <h4 class="left" > Availability</h4>
+
+
+         <table class="table table-bordered">
+            <thead>
+
+                <tr>
+                  <th>Meeting Agenda</th>
+                  <th style="width: 10px">Member</th>
+
+                    <th>Availability</th>
+                  <th>Date Submited</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr role="row">
+                 {% for member in avail %}
+                    <td>{{member.event.title}}</td>
+                    <td>{{member.user.first_name}}</td></td>
+
+                    <td>{{member.available_for_meeting}}</td>
+                    <td>{{member.Todays_date}}</td>
+
+
+
+              {%endfor%}
+                </tr>
+
+
+              </tbody>
+        </table>
+
     </div>
+
+
+
+
+
+
+
 {% endblock %}

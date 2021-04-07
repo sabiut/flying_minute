@@ -28,16 +28,18 @@
 
 
   <div class="card-body">
-      <form method="post" action=""  >
+      <form method="post" action="" >
     {% csrf_token %}
           <table>
           {{form.as_table}}
           </table>
+          <button type="submit" class="btn btn-info"><i class="fas fa-save"></i> Save Record</button>
 
 
-              <button type="submit" class="btn btn-info"><i class="fas fa-save"></i> Save Record</button>
 
       </form>
+  </div>
+
 
 {%endblock%}
 

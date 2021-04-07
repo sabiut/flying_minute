@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateInput
-from .models import Event, EventMember
+from .models import Event, EventMember, IndicatePresence
 from django import forms
 
 
@@ -29,3 +29,17 @@ class AddMemberForm(forms.ModelForm):
     class Meta:
         model = EventMember
         fields = ['user']
+
+
+# setup date picker start
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
+class IndicateAvailabilityForm(forms.ModelForm):
+    class Meta:
+        model = IndicatePresence
+        fields = 'event', 'user', 'available_for_meeting', 'Todays_date'
+        widgets = {
+            'Todays_date': DateInput()
+        }
