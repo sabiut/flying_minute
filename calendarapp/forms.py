@@ -43,3 +43,12 @@ class IndicateAvailabilityForm(forms.ModelForm):
         widgets = {
             'Todays_date': DateInput()
         }
+
+
+class IndicateAvailabilityForm(forms.ModelForm):
+    class Meta:
+        model = IndicatePresence
+        fields = 'event', 'user', 'available_for_meeting', 'Todays_date'
+        widgets = {
+            'Todays_date': DateInput()
+        }

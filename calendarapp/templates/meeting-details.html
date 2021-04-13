@@ -51,7 +51,7 @@ Event Details
 
         <h4> <a class="btn btn-danger" href="{% url 'calendarapp:Indicate_Availability' event.id %}"> <i class="fas fa-tools"></i> Indicate Availability</a></h4>
 
-
+<div>
          <table class="table table-bordered">
             <thead>
 
@@ -60,28 +60,24 @@ Event Details
                   <th style="width: 10px">Member</th>
 
                     <th>Availability</th>
-                  <th>Date Submited</th>
+                  <th>Date Submitted</th>
+                    <th> Make Change</th>
                 </tr>
               </thead>
 
               <tbody>
-
+                {% for member in avail %}
                 <tr role="row">
-                 {% for member in avail %}
                     <td>{{member.event.title}}</td>
                     <td>{{member.user.first_name}}</td>
-
                     <td>{{member.available_for_meeting}}</td>
                     <td>{{member.Todays_date}}</td>
+                    <td><a class="btn btn-info" href="{% url 'calendarapp:update_availability' event.id %}"> <i class="far fa-edit"></i> Edit</a></td>
 
-
-
-              {%endfor%}
                 </tr>
-
-
+              {%endfor%}
               </tbody>
         </table>
-
+</div>
     </div>
 {% endblock %}

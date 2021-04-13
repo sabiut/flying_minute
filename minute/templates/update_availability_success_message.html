@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends "member.html"%}
+
+{% block content %}
+<div class="alert alert-primary" role="alert">
+   <a class="btn btn-info" href="{%url 'calendarapp:member'%}"> <i class="fas fa-backward"></i> Back</a> Record was successfully Edited!
+</div>
+
+
+{%endblock%}
+
+</body>
+</html>

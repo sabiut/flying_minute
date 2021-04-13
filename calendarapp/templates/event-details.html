@@ -74,24 +74,22 @@ Event Details
 
                     <th>Availability</th>
                   <th>Date Submited</th>
+
                 </tr>
               </thead>
 
               <tbody>
-
+               {% for member in avail %}
                 <tr role="row">
-                 {% for member in avail %}
+
                     <td>{{member.event.title}}</td>
                     <td>{{member.user.first_name}}</td></td>
 
                     <td>{{member.available_for_meeting}}</td>
                     <td>{{member.Todays_date}}</td>
 
-
-
-              {%endfor%}
                 </tr>
-
+                 {%endfor%}
 
               </tbody>
         </table>

@@ -1,4 +1,4 @@
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django.views import generic
 
-from .forms import minutesForm, BoardMembersForm, AddMemberPresentForm, commentsForm
+from .forms import minutesForm, BoardMembersForm, AddMemberPresentForm, commentsForm, ApprovalForm
 from .models import BoardMembers, fly_minute, Comments
 
 # signup
@@ -27,23 +27,39 @@ def index(request):
 
 
 def dashboard(request):
-    return render(request, 'index.html')
+    in_group = User.objects.filter(groups__name="organizer")
+    if request.user.is_authenticated:
+        if request.user in in_group:
+            return render(request, 'index.html')
+        else:
+            return render(request, 'no_access.html')
 
 
 def login_page(request):
     return render(request, 'login.html')
 
 
+# log user out
+def log_out(request):
+    auth.logout(request)
+    return render(request, 'home.html')
+
+
 @login_required(login_url='login_page')
 def minute_form(request):
-    if request.method == 'POST':
-        form = minutesForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/add_member_present_form')
-    else:
-        form = minutesForm()
-    return render(request, 'minute_form.html', {'form': form})
+    in_group = User.objects.filter(groups__name="organizer")
+    if request.user.is_authenticated:
+        if request.user in in_group:
+            if request.method == 'POST':
+                form = minutesForm(request.POST)
+                if form.is_valid():
+                    form.save()
+                    return HttpResponseRedirect('/add_member_present_form')
+            else:
+                form = minutesForm()
+            return render(request, 'minute_form.html', {'form': form})
+        else:
+            return render(request, 'no_access.html')
 
 
 @login_required(login_url='login_page')
@@ -64,20 +80,30 @@ def add_member_present_form(request):
 
 
 def add_board_members(request):
-    if request.method == 'POST':
-        form = BoardMembersForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return render(request, 'add_member_success.html')
+    in_group = User.objects.filter(groups__name="organizer")
+    if request.user.is_authenticated:
+        if request.user in in_group:
+            if request.method == 'POST':
+                form = BoardMembersForm(request.POST, request.FILES)
+                if form.is_valid():
+                    form.save()
+                    return render(request, 'add_member_success.html')
 
-    else:
-        form = BoardMembersForm()
-    return render(request, 'board_members.html', {'form': form})
+            else:
+                form = BoardMembersForm()
+            return render(request, 'board_members.html', {'form': form})
+        else:
+            return render(request, 'no_access.html')
 
 
 def display_board_members(request):
-    board_members = BoardMembers.objects.all()
-    return render(request, 'display_board.html', locals())
+    in_group = User.objects.filter(groups__name="organizer")
+    if request.user.is_authenticated:
+        if request.user in in_group:
+            board_members = BoardMembers.objects.all()
+            return render(request, 'display_board.html', locals())
+        else:
+            return render(request, 'no_access.html')
 
 
 @login_required(login_url='login_page')
@@ -206,3 +232,17 @@ def update_fly_minute_form(request, minutes_id):
     return render(request, 'add_member.html', locals())
 
 
+
+@login_required(login_url='login_page')
+def authorize_minute_form(request, auth_minutes_id):
+    if request.method == 'POST':
+        get_minute_id = fly_minute.objects.get(id=auth_minutes_id)
+        form = ApprovalForm(request.POST, instance=get_minute_id)
+        if form.is_valid():
+            form.save()
+            # messages.info(request,'successfully updated the board record.')
+            return render(request, 'fly_minute_success_message.html')
+    else:
+        get_minute_id = fly_minute.objects.get(id=auth_minutes_id)
+        form = ApprovalForm(instance=get_minute_id)
+    return render(request, 'authorize_minute.html', locals())

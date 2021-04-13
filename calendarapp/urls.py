@@ -12,4 +12,6 @@ urlpatterns = [
     path('availability<int:availability_id>/availability/', views.IndicateAvailability, name='Indicate_Availability'),
     path('add_eventmember/<int:event_id>', views.add_eventmember, name='add_eventmember'),
     path('event/<int:pk>/remove', views.EventMemberDeleteView.as_view(), name="remove_event"),
+    path('update_availability/<int:availability_id>/update_availability/', views.Update_IndicateAvailability, name='update_availability'),
+
 ]

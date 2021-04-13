@@ -1,5 +1,5 @@
 from datetime import datetime, date
-
+from django.contrib.auth.models import User
 import self as self
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -61,6 +61,7 @@ class CalendarView(LoginRequiredMixin, generic.ListView):
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
         return context
+
 
 
 class MemberView(LoginRequiredMixin, generic.ListView):
@@ -173,3 +174,17 @@ def IndicateAvailability(request, availability_id):
         #event = Event.objects.get(id=availability_id)
         form = IndicateAvailabilityForm()
     return render(request, 'availabilityForm.html', locals())
+
+
+@login_required(login_url='login_page')
+def Update_IndicateAvailability(request, availability_id):
+    if request.method == 'POST':
+        get_availability_id = IndicatePresence.objects.get(id=availability_id)
+        form = IndicateAvailabilityForm(request.POST, instance=get_availability_id)
+        if form.is_valid():
+            form.save()
+            return render(request, 'update_availability_success_message.html')
+    else:
+        get_availability_id = IndicatePresence.objects.get(id=availability_id)
+        form = IndicateAvailabilityForm(instance=get_availability_id)
+    return render(request, 'update_availability.html', locals())
